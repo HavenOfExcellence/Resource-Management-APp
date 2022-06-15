@@ -1,3 +1,7 @@
 <template>
-  <div class="text-red-800">asdasd</div>
+  <div class="text-red-800">asdasd{{ data }}</div>
 </template>
+
+<script setup>
+const { data } = await useFetch("/api/hello");
+</script>
