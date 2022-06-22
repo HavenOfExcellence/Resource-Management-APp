@@ -1,6 +1,9 @@
 <script setup>
 function left() {
-  console.log("Hello World");
+  console.log("Left");
+}
+function right() {
+  console.log("Right");
 }
 </script>
 <template>
