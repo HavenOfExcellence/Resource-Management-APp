@@ -1,9 +1,20 @@
 <script setup>
+import { ref } from "vue";
+import { month_convert } from "@/utils/Calendar";
 function left() {
   console.log("Left");
 }
 function right() {
   console.log("Right");
+}
+const year = ref(2022);
+const month = ref("June");
+const start_day = ref(2);
+
+function stepmonth(step) {
+  const data = month_convert(month.value, step, year.value);
+  month.value = data.month;
+  year.value = data.year;
 }
 </script>
 <template>
@@ -13,7 +24,7 @@ function right() {
     >
       <div class="p-1 space-y-4">
         <header class="flex justify-between p-2">
-          <button @click="print">
+          <button @click="stepmonth(-1)">
             <span>
               <svg
                 class="w-6 h-6"
@@ -29,30 +40,32 @@ function right() {
               </svg>
             </span>
           </button>
-          <p>November</p>
-          <span>
-            <svg
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </span>
+          <p>{{ month }} {{ year }}</p>
+          <button @click="stepmonth(1)">
+            <span>
+              <svg
+                class="w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </span>
+          </button>
         </header>
         <ul class="grid grid-cols-7 text-sm justify-items-center text-700">
-          <li>Sun</li>
           <li>Mon</li>
           <li>Tue</li>
           <li>Wed</li>
           <li>Th</li>
           <li>Fr</li>
           <li>Sat</li>
+          <li>Sun</li>
         </ul>
         <div
           class="pb-3 grid grid-cols-7 gap-y-6 text-sm justify-items-center text-700"
