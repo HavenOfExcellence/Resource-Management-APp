@@ -2,9 +2,19 @@ function return_dates(date: Date = new Date()) {
   return date.getDate();
 }
 
-function month_convert(month: string, step: number = 1, year) {
-  console.log(step);
-  const dates = [
+function getfirstdateofmonth(month, year) {
+  const d = new Date(year, month - 1, 1);
+  return d.getDay();
+}
+
+function getmaxdateofmonth(month, year) {
+  return new Date(year, month, 0).getDate();
+}
+
+console.log(getmaxdateofmonth(7, 2022));
+
+function month_convert(month: number) {
+  const months = [
     "January",
     "February",
     "March",
@@ -18,21 +28,7 @@ function month_convert(month: string, step: number = 1, year) {
     "November",
     "December",
   ];
-  let index = dates.indexOf(month) + step;
-  let yearstep;
-  if (index > 11) {
-    year++;
-    year;
-  } else if (index < 0) {
-    year--;
-    year;
-  }
-  index = (index + 12) % 12;
-  return { month: dates[index], year: year };
+  return months[month - 1];
 }
 
-console.log(month_convert("January", -1, 9));
-console.log(month_convert("December", 1, 9));
-console.log(month_convert("November", 1, 9));
-
-export { month_convert };
+export { month_convert, getfirstdateofmonth, getmaxdateofmonth };

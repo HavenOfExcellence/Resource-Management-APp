@@ -1,20 +1,26 @@
 <script setup>
 import { ref } from "vue";
-import { month_convert } from "@/utils/Calendar";
-function left() {
-  console.log("Left");
-}
-function right() {
-  console.log("Right");
-}
+import { month_convert, getfirstdateofmonth } from "@/utils/Calendar";
+
 const year = ref(2022);
-const month = ref("June");
-const start_day = ref(2);
+const month = ref(6);
+const start_day = ref(3);
+const end_day = ref(30);
+
+const counter = useState("counter", () => 123);
 
 function stepmonth(step) {
-  const data = month_convert(month.value, step, year.value);
-  month.value = data.month;
-  year.value = data.year;
+  month.value = month.value + step;
+
+  if (month.value > 12) {
+    month.value = 1;
+    year.value = year.value + 1;
+  } else if (month.value <= 0) {
+    month.value = 12;
+    year.value = year.value - 1;
+  }
+
+  start_day.value = getfirstdateofmonth(month.value, year.value);
 }
 </script>
 <template>
@@ -40,7 +46,7 @@ function stepmonth(step) {
               </svg>
             </span>
           </button>
-          <p>{{ month }} {{ year }}</p>
+          <p>{{ month_convert(month) }} {{ year }}</p>
           <button @click="stepmonth(1)">
             <span>
               <svg
@@ -70,43 +76,14 @@ function stepmonth(step) {
         <div
           class="pb-3 grid grid-cols-7 gap-y-6 text-sm justify-items-center text-700"
         >
-          <p>1</p>
-          <p>2</p>
-          <p>3</p>
-          <p>4</p>
-          <p>5</p>
-          <p>6</p>
-          <p>7</p>
-          <p>8</p>
-          <p>9</p>
-          <p>10</p>
-          <p>11</p>
-          <p>12</p>
-          <p>13</p>
-          <p>14</p>
-          <p>15</p>
-          <p>16</p>
-          <p>17</p>
-          <p>18</p>
-          <p>19</p>
-          <p>20</p>
-          <p>21</p>
-          <p>22</p>
-          <p>23</p>
-          <p>24</p>
-          <p>25</p>
-          <p>26</p>
-          <p>27</p>
-          <p>28</p>
-          <p>29</p>
-          <p>30</p>
-          <p class="text-gray-400">1</p>
-          <p class="text-gray-400">2</p>
-          <p class="text-gray-400">3</p>
-          <p class="text-gray-400">4</p>
-          <p class="text-gray-400">5</p>
+          <div v-for="item in start_day - 1"></div>
+          <button @click="counter = numb" v-for="numb in end_day">
+            <p>{{ numb }}</p>
+          </button>
         </div>
       </div>
+      {{ start_day }}
+      {{ counter }}
     </div>
   </body>
 </template>
