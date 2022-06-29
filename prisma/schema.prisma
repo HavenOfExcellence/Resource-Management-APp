@@ -15,4 +15,13 @@ model User {
   name     String?
   email    String?
   password String?
+  Event    Event?  @relation(fields: [eventId], references: [id])
+  eventId  String?
+}
+
+model Event {
+  id    String    @id @default(uuid())
+  name  String?
+  date  DateTime?
+  users User[]
 }
