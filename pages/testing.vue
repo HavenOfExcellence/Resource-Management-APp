@@ -98,12 +98,25 @@ function log(info) {
         </div>
       </div>
       <div class="bg-white border border-gray-200 rounded">
-        <body class="">
+        <body v-if="schedule.events == []" class="">
           <h2 class="font-semibold text-gray-900">Schedule for Today</h2>
           <ol class="mt-4 space-y-1 text-sm leading-6 text-gray-500">
             <p>No meetings for today.</p>
           </ol>
         </body>
+        <div class="" v-if="schedule.events !== []">
+          <h2
+            class="text-center underline font-semibold text-gray-900 text-base"
+          >
+            Schedule for Today
+          </h2>
+          <div v-for="event in schedule.events">
+            <h2>{{ event.name }}</h2>
+            <h2 v-for="person in event.persons">
+              {{ person }}
+            </h2>
+          </div>
+        </div>
       </div>
     </div>
   </body>
