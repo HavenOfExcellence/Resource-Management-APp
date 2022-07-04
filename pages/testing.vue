@@ -9,19 +9,21 @@ const day = ref(0);
 const start_day = ref(3);
 const end_day = ref(30);
 
-const schedule = ref({
-  date: "070422",
-  events: [
-    {
-      name: "SAF Parade",
-      persons: ["ziyang", "andrew"],
-    },
-    {
-      name: "Conference",
-      persons: ["Daniel", "Denzel"],
-    },
-  ],
-});
+const schedule = reactive(
+  ref({
+    date: "070422",
+    events: [
+      {
+        name: "SAF Parade",
+        persons: ["ziyang", "andrew"],
+      },
+      {
+        name: "Conference",
+        persons: ["Daniel", "Denzel"],
+      },
+    ],
+  })
+);
 
 const counter = useState("counter", () => 123);
 
@@ -40,8 +42,14 @@ function stepmonth(step) {
   start_day.value = getfirstdateofmonth(month.value, year.value);
 }
 
-function getinfo(dayinfo, month, year) {
-  console.log(dayinfo);
+async function getinfo(dayinfo, monthinfo, yearinfo) {
+  schedule.value = await useLazyFetch("api/event", {
+    params: {
+      day: dayinfo,
+      month: monthinfo,
+      year: yearinfo,
+    },
+  }).data;
   day.value = dayinfo;
 }
 </script>
@@ -106,30 +114,30 @@ function getinfo(dayinfo, month, year) {
         </div>
       </div>
       <div class="bg-white border border-gray-200 rounded">
-        <body v-if="schedule.events == []" class="">
+        <!-- <body v-if="schedule.events == []" class="">
           <h2 class="font-semibold text-gray-900">Schedule for Today</h2>
           <ol class="mt-4 space-y-1 text-sm leading-6 text-gray-500">
             <p>No meetings for today.</p>
           </ol>
-        </body>
-        <div class="" v-if="schedule.events !== []">
+        </body> -->
+        <div class="">
           <h2 class="text-center my-2 font-semibold text-gray-900 text-base">
             Schedule for {{ month_convert(month) }} {{ day }}, {{ year }}
           </h2>
-          <div class="flex" v-for="event in schedule.events">
+          <div class="flex items-center" v-for="event in schedule.events">
             <div>
               <h2 class="mx-4 font-bold text-sm">{{ event.name }}</h2>
               <h2 class="mx-4 text-sm">1:00 PM - 2:30PM</h2>
             </div>
             <div
+              v-for="person in event.persons"
               class="font-bold text-gray-700 rounded-full border border-slate-600 bg-white flex items-center justify-center font-mono"
               style="height: 30px; width: 30px; font-size: 12px"
             >
-              V
+              <h2>
+                {{ person[0].toUpperCase() }}
+              </h2>
             </div>
-            <h2 v-for="person in event.persons">
-              {{ person }}
-            </h2>
           </div>
         </div>
       </div>
@@ -138,4 +146,6 @@ function getinfo(dayinfo, month, year) {
   {{ start_day }}
   {{ counter }}
   {{ schedule }}
+  <br />
+  {{ schedule.events }}
 </template>
