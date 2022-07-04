@@ -7,6 +7,16 @@ const month = ref(6);
 const start_day = ref(3);
 const end_day = ref(30);
 
+const schedule = ref({
+  date: "070422",
+  events: [
+    {
+      name: "SAF Parade",
+      persons: ["ziyang", "andrew"],
+    },
+  ],
+});
+
 const counter = useState("counter", () => 123);
 
 function stepmonth(step) {
@@ -99,4 +109,5 @@ function log(info) {
   </body>
   {{ start_day }}
   {{ counter }}
+  {{ schedule }}
 </template>
