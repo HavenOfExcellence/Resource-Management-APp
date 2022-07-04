@@ -88,8 +88,8 @@ function getinfo(dayinfo, month, year) {
             <li>Mon</li>
             <li>Tue</li>
             <li>Wed</li>
-            <li>Th</li>
-            <li>Fr</li>
+            <li>Thu</li>
+            <li>Fri</li>
             <li>Sat</li>
             <li>Sun</li>
           </ul>
