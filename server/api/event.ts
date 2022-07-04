@@ -7,10 +7,12 @@ export default defineEventHandler((event) => {
       {
         name: "Event 1",
         persons: ["ziyang", "andrew", "dave"],
+        time: "Full Date",
       },
       {
         name: "Event 2",
         persons: ["Daniel", "Denzel"],
+        time: "1:00 PM - 2:30 PM",
       },
     ],
   };
