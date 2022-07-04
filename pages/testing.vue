@@ -27,6 +27,7 @@ const counter = useState("counter", () => 123);
 
 function stepmonth(step) {
   month.value = month.value + step;
+  day.value = 0;
 
   if (month.value > 12) {
     month.value = 1;
