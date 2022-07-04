@@ -120,6 +120,12 @@ function getinfo(dayinfo, month, year) {
               <h2 class="mx-4 font-bold text-sm">{{ event.name }}</h2>
               <h2 class="mx-4 text-sm">1:00 PM - 2:30PM</h2>
             </div>
+            <div
+              class="font-bold text-gray-700 rounded-full border border-slate-600 bg-white flex items-center justify-center font-mono"
+              style="height: 30px; width: 30px; font-size: 12px"
+            >
+              V
+            </div>
             <h2 v-for="person in event.persons">
               {{ person }}
             </h2>
