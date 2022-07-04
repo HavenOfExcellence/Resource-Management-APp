@@ -99,6 +99,7 @@ function getinfo(dayinfo, month, year) {
             <div v-for="item in start_day - 1"></div>
             <button @click="getinfo(numb, month, year)" v-for="numb in end_day">
               <p>{{ numb }}</p>
+              <div>.</div>
             </button>
           </div>
         </div>
