@@ -4,6 +4,8 @@ import { month_convert, getfirstdateofmonth } from "@/utils/Calendar";
 
 const year = ref(2022);
 const month = ref(6);
+const day = ref(0);
+
 const start_day = ref(3);
 const end_day = ref(30);
 
@@ -13,6 +15,10 @@ const schedule = ref({
     {
       name: "SAF Parade",
       persons: ["ziyang", "andrew"],
+    },
+    {
+      name: "Conference",
+      persons: ["Daniel", "Denzel"],
     },
   ],
 });
@@ -33,9 +39,9 @@ function stepmonth(step) {
   start_day.value = getfirstdateofmonth(month.value, year.value);
 }
 
-function log(info) {
-  counter.value = info;
-  console.log(info);
+function getinfo(dayinfo, month, year) {
+  console.log(dayinfo);
+  day.value = dayinfo;
 }
 </script>
 <template>
@@ -91,7 +97,7 @@ function log(info) {
             class="pb-3 grid grid-cols-7 gap-y-6 text-sm justify-items-center text-700"
           >
             <div v-for="item in start_day - 1"></div>
-            <button @click="log(numb)" v-for="numb in end_day">
+            <button @click="getinfo(numb, month, year)" v-for="numb in end_day">
               <p>{{ numb }}</p>
             </button>
           </div>
@@ -105,13 +111,14 @@ function log(info) {
           </ol>
         </body>
         <div class="" v-if="schedule.events !== []">
-          <h2
-            class="text-center underline font-semibold text-gray-900 text-base"
-          >
-            Schedule for Today
+          <h2 class="text-center my-2 font-semibold text-gray-900 text-base">
+            Schedule for {{ month_convert(month) }} {{ day }}, {{ year }}
           </h2>
-          <div v-for="event in schedule.events">
-            <h2>{{ event.name }}</h2>
+          <div class="flex" v-for="event in schedule.events">
+            <div>
+              <h2 class="mx-4 font-bold text-sm">{{ event.name }}</h2>
+              <h2 class="mx-4 text-sm">1:00 PM - 2:30PM</h2>
+            </div>
             <h2 v-for="person in event.persons">
               {{ person }}
             </h2>
