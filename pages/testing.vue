@@ -166,14 +166,4 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
   {{ start_day }}
   {{ counter }}
   {{ schedule }}
-  <button id="dropdownDefault" data-dropdown-toggle="dropdown">
-    asdasdasd
-  </button>
-
-  <div id="dropdown">
-    <ul>
-      <li>aasdasd</li>
-      <li>asdasdasdd</li>
-    </ul>
-  </div>
 </template>
