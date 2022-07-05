@@ -2,10 +2,24 @@
 import { Form } from "vee-validate";
 import * as yup from "yup";
 
-function onSubmit(values) {
-  console.log(values);
-  //   navigateTo("/scenario");
+async function onSubmit(values) {
+  const data = await useFetch("/api/authentication", {
+    params: {
+      email: values.email,
+      password: values.password,
+    },
+  });
+
+  const auth = data.data.value.auth;
+  if (auth) {
+    navigateTo("/index");
+  }
 }
+
+const schema = yup.object({
+  email: yup.string().email("Invalid Email").required("Email is required"),
+  password: yup.string().required("Password is required"),
+});
 </script>
 <template>
   <div
