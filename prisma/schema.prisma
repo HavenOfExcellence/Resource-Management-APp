@@ -17,6 +17,7 @@ model User {
   password String?
   Event    Event?  @relation(fields: [eventId], references: [id])
   eventId  String?
+  hub      String?
 }
 
 model Event {

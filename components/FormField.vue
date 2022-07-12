@@ -16,7 +16,7 @@ const props = defineProps({
     default: "text",
   },
   rules: {
-    type: Function,
+    type: String,
     default: null,
   },
   placeholder: {

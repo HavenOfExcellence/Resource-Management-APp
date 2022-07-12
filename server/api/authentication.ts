@@ -1,10 +1,17 @@
-export default defineEventHandler((event) => {
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+
+export default defineEventHandler(async (event) => {
   const { email, password } = useQuery(event);
 
-  if (email == "test@gmail.com" && password == "test") {
-    return {
-      auth: true,
-    };
+  const user = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+
+  if (user.password === password) {
+    return { auth: true };
   }
 
   return { auth: false };
