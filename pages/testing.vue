@@ -57,7 +57,7 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
 </script>
 
 <template>
-  <body style="background: #fcfcfc">
+  <div style="background: #fcfcfc">
     <div class="bg-green-700 grid grid-cols-2 divide-x p-8">
       <div class="bg-white border border-gray-200 divide-gray-200 rounded">
         <div class="p-1 space-y-4">
@@ -118,57 +118,58 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
           </div>
         </div>
       </div>
-      <div class="bg-white border border-gray-200 rounded">
+      <div class="bg-white border border-gray-200 rounded flex flex-col">
         <!-- <body v-if="schedule.events == []" class="">
             <h2 class="font-semibold text-gray-900">Schedule for Today</h2>
             <ol class="mt-4 space-y-1 text-sm leading-6 text-gray-500">
               <p>No meetings for today.</p>
             </ol>
           </body> -->
-        <div class="">
-          <h2 class="text-center my-2 font-semibold text-gray-900 text-base">
-            Schedule for {{ month_convert(month) }} {{ day }}, {{ year }}
-          </h2>
-          <div
-            class="grid grid-cols-2 items-center"
-            v-for="event in schedule.events"
-          >
-            <div class="h-full">
-              <h2 class="mx-4 font-bold text-sm">{{ event.name }}</h2>
-              <h2 class="mx-4 text-sm">{{ event.time }}</h2>
-            </div>
-            <div class="flex mb-5 -space-x-6 grow">
-              <div v-for="person in event.persons">
-                <ToolTip :message="person">
-                  <div
-                    class="relative border border-gray-300 w-10 h-10 overflow-hidden bg-gray-100 rounded-full"
+        <!-- Insidee Right -->
+
+        <h2 class="text-center my-2 font-semibold text-gray-900 text-base">
+          Schedule for {{ month_convert(month) }} {{ day }}, {{ year }}
+        </h2>
+        <div
+          class="grid grid-cols-2 items-center"
+          v-for="event in schedule.events"
+        >
+          <div class="h-full">
+            <h2 class="mx-4 font-bold text-sm">{{ event.name }}</h2>
+            <h2 class="mx-4 text-sm">{{ event.time }}</h2>
+          </div>
+          <div class="flex mb-5 -space-x-6 grow">
+            <div v-for="person in event.persons">
+              <ToolTip :message="person">
+                <div
+                  class="relative border border-gray-300 w-10 h-10 overflow-hidden bg-gray-100 rounded-full"
+                >
+                  <svg
+                    class="absolute w-12 h-12 text-gray-400 -left-1"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <svg
-                      class="absolute w-12 h-12 text-gray-400 -left-1"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                    <h2>
-                      {{ person[0].toUpperCase() }}
-                    </h2>
-                  </div>
-                </ToolTip>
-              </div>
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                  <h2>
+                    {{ person[0].toUpperCase() }}
+                  </h2>
+                </div>
+              </ToolTip>
             </div>
           </div>
         </div>
+        <div class="grow">asd</div>
+        <div class="flex items-center justify-center">
+          <EventModal title="New Event" />
+        </div>
       </div>
     </div>
-  </body>
-  <div>
-    <EventModal />
   </div>
   {{ start_day }}
   {{ counter }}

@@ -1,4 +1,13 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  title: {
+    type: String,
+    default: "Toggle Modal",
+  },
+});
+
+const { title } = props;
+</script>
 
 <template>
   <button
@@ -6,7 +15,7 @@
     type="button"
     data-modal-toggle="defaultModal"
   >
-    Toggle modal
+    {{ title }}
   </button>
 
   <!-- Main modal -->
