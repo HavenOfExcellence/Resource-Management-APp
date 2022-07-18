@@ -55,6 +55,7 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
   day.value = dayinfo;
 }
 </script>
+
 <template>
   <body style="background: #fcfcfc">
     <div class="bg-green-700 grid grid-cols-2 divide-x p-8">
@@ -119,11 +120,11 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
       </div>
       <div class="bg-white border border-gray-200 rounded">
         <!-- <body v-if="schedule.events == []" class="">
-          <h2 class="font-semibold text-gray-900">Schedule for Today</h2>
-          <ol class="mt-4 space-y-1 text-sm leading-6 text-gray-500">
-            <p>No meetings for today.</p>
-          </ol>
-        </body> -->
+            <h2 class="font-semibold text-gray-900">Schedule for Today</h2>
+            <ol class="mt-4 space-y-1 text-sm leading-6 text-gray-500">
+              <p>No meetings for today.</p>
+            </ol>
+          </body> -->
         <div class="">
           <h2 class="text-center my-2 font-semibold text-gray-900 text-base">
             Schedule for {{ month_convert(month) }} {{ day }}, {{ year }}
@@ -166,6 +167,9 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
       </div>
     </div>
   </body>
+  <div>
+    <EventModal />
+  </div>
   {{ start_day }}
   {{ counter }}
   {{ schedule }}

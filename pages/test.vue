@@ -1,4 +1,6 @@
 <script setup></script>
 <template>
-  <EventModal />
+  <div>
+    <EventModal />
+  </div>
 </template>
