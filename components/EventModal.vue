@@ -69,16 +69,11 @@
                         />
                       </div>
 
-                      <div class="col-span-6 sm:col-span-3">
-                        asdasd
-                        <div inline-datepicker data-date="02/25/2022"></div>
-                      </div>
-
                       <div class="col-span-6">
                         <label
                           for="street-address"
                           class="block text-sm font-medium text-gray-700"
-                          >Street address</label
+                          >Date</label
                         >
                         <input
                           type="text"
@@ -93,43 +88,13 @@
                         <label
                           for="city"
                           class="block text-sm font-medium text-gray-700"
-                          >City</label
+                          >Users</label
                         >
                         <input
                           type="text"
                           name="city"
                           id="city"
                           autocomplete="address-level2"
-                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                      </div>
-
-                      <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                        <label
-                          for="region"
-                          class="block text-sm font-medium text-gray-700"
-                          >State / Province</label
-                        >
-                        <input
-                          type="text"
-                          name="region"
-                          id="region"
-                          autocomplete="address-level1"
-                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                      </div>
-
-                      <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                        <label
-                          for="postal-code"
-                          class="block text-sm font-medium text-gray-700"
-                          >ZIP / Postal code</label
-                        >
-                        <input
-                          type="text"
-                          name="postal-code"
-                          id="postal-code"
-                          autocomplete="postal-code"
                           class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
                       </div>

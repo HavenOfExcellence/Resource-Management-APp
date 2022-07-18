@@ -14,7 +14,7 @@ async function onSubmit(values) {
   const auth = data.data.value.auth;
   console.log(auth);
   if (auth) {
-    navigateTo("/index");
+    navigateTo("/testing");
   }
 }
 
