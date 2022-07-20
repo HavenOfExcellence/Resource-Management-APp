@@ -1,13 +1,17 @@
 <script setup>
 import { ref } from "vue";
-import { month_convert, getfirstdateofmonth } from "@/utils/Calendar";
+import {
+  month_convert,
+  getfirstdateofmonth,
+  getmaxdateofmonth,
+} from "@/utils/Calendar";
 
 const year = ref(2022);
-const month = ref(6);
+const month = ref(new Date().getMonth() + 1);
 const day = ref(0);
 
-const start_day = ref(3);
-const end_day = ref(30);
+const start_day = ref(getfirstdateofmonth(month.value, year.value));
+const end_day = ref(getmaxdateofmonth(month.value, year.value));
 
 const schedule = reactive(
   ref({
@@ -42,6 +46,7 @@ function stepmonth(step) {
   }
 
   start_day.value = getfirstdateofmonth(month.value, year.value);
+  end_day.value = getmaxdateofmonth(month.value, year.value);
 }
 
 async function getinfo(dayinfo, monthinfo, yearinfo) {
@@ -111,9 +116,9 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
             <div v-for="item in start_day - 1"></div>
             <button @click="getinfo(numb, month, year)" v-for="numb in end_day">
               <p>{{ numb }}</p>
-              <span
+              <!-- <span
                 class="w-3.5 h-3.5 bg-blue-300 border-2 border-white rounded-full"
-              ></span>
+              ></span> -->
             </button>
           </div>
         </div>
@@ -174,4 +179,7 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
   {{ start_day }}
   {{ counter }}
   {{ schedule }}
+  {{ year }}
+  {{ month }}
+  {{ day }}
 </template>
