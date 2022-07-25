@@ -7,7 +7,7 @@ const props = defineProps({
 });
 
 const { title } = props;
-
+const fullday = ref(false);
 const fromtime = ref("");
 const totime = ref("");
 </script>
@@ -93,12 +93,14 @@ const totime = ref("");
                             class="h-12 w-full"
                             v-model="fromtime"
                             timePicker
+                            :disabled="fullday"
                           />
                           <Datepicker
                             placeholder="To"
                             class="h-12 w-full"
                             v-model="totime"
                             timePicker
+                            :disabled="fullday"
                           />
                         </div>
                       </div>
@@ -107,6 +109,7 @@ const totime = ref("");
                           <input
                             id="remember"
                             type="checkbox"
+                            v-model="fullday"
                             value=""
                             class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                           />
