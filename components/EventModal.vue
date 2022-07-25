@@ -7,9 +7,11 @@ const props = defineProps({
 });
 
 const { title } = props;
+
 const fullday = ref(false);
 const fromtime = ref("");
 const totime = ref("");
+const people = ref(null);
 </script>
 
 <template>
@@ -127,13 +129,36 @@ const totime = ref("");
                           class="block text-sm font-medium text-gray-700"
                           >Users</label
                         >
-                        <input
-                          type="text"
-                          name="city"
-                          id="city"
-                          autocomplete="address-level2"
-                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
+                        <multiselect
+                          v-model="people"
+                          :multiple="true"
+                          :close-on-select="false"
+                          :clear-on-select="false"
+                          :preserve-search="true"
+                          placeholder="Pick some"
+                          label="transform"
+                          track-by="name"
+                          :preselect-first="false"
+                          :options="[
+                            { name: 'Jason', transform: 'Jason-S1' },
+                            { name: 'Adam', transform: 'Adam-S2' },
+                            { name: 'Felicia', transform: 'Felicia-S2' },
+                            { name: 'Zi Yang', transform: 'Zi Yang-S3' },
+                            { name: 'Paula', transform: 'Paula-S3' },
+                            { name: 'Harry', transform: 'Harry-S1' },
+                          ]"
+                        >
+                          <template
+                            slot="selection"
+                            track-by="name"
+                            slot-scope="{ values, search, isOpen }"
+                            ><span
+                              class="multiselect__single"
+                              v-if="values.length &amp;&amp; !isOpen"
+                              >{{ values.length }} options selected</span
+                            ></template
+                          >
+                        </multiselect>
                       </div>
                     </div>
                   </div>
