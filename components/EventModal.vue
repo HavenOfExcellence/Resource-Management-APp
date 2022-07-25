@@ -7,6 +7,9 @@ const props = defineProps({
 });
 
 const { title } = props;
+
+const fromtime = ref("");
+const totime = ref("");
 </script>
 
 <template>
@@ -85,21 +88,17 @@ const { title } = props;
                           >Date/Time</label
                         >
                         <div class="flex-row flex">
-                          <input
+                          <Datepicker
                             placeholder="From"
-                            type="text"
-                            name="street-address"
-                            id="street-address"
-                            autocomplete="street-address"
-                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            class="h-12 w-full"
+                            v-model="fromtime"
+                            timePicker
                           />
-                          <input
+                          <Datepicker
                             placeholder="To"
-                            type="text"
-                            name="street-address"
-                            id="street-address"
-                            autocomplete="street-address"
-                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            class="h-12 w-full"
+                            v-model="totime"
+                            timePicker
                           />
                         </div>
                       </div>
@@ -110,7 +109,6 @@ const { title } = props;
                             type="checkbox"
                             value=""
                             class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                            required
                           />
                         </div>
                         <label

@@ -1,5 +1,6 @@
 <script setup>
 const people = ref(null);
+const time = ref("");
 </script>
 <template>
   <div>
@@ -33,6 +34,7 @@ const people = ref(null);
         ></template
       >
     </multiselect>
+    <Datepicker class="h-12 w-full" v-model="time" timePicker />
     <EventModal />
   </div>
 </template>
