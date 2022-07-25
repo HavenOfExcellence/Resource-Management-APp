@@ -61,7 +61,7 @@ const { title } = props;
               <form action="#" method="POST">
                 <div class="shadow overflow-hidden sm:rounded-md">
                   <div class="px-4 py-5 bg-white">
-                    <div class="grid grid-cols-6 gap-6">
+                    <div class="grid grid-cols-6 gap-4">
                       <div class="col-span-4">
                         <label
                           for="first-name"
@@ -78,19 +78,46 @@ const { title } = props;
                         />
                       </div>
 
-                      <div class="col-span-6">
+                      <div class="col-span-6 flex flex-col">
                         <label
                           for="street-address"
                           class="block text-sm font-medium text-gray-700"
-                          >Date</label
+                          >Date/Time</label
                         >
-                        <input
-                          type="text"
-                          name="street-address"
-                          id="street-address"
-                          autocomplete="street-address"
-                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
+                        <div class="flex-row flex">
+                          <input
+                            placeholder="From"
+                            type="text"
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
+                          <input
+                            placeholder="To"
+                            type="text"
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-span-6 flex items-start">
+                        <div class="flex items-center h-5">
+                          <input
+                            id="remember"
+                            type="checkbox"
+                            value=""
+                            class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                            required
+                          />
+                        </div>
+                        <label
+                          for="remember"
+                          class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                          >Full Day</label
+                        >
                       </div>
 
                       <div class="col-span-6 sm:col-span-6 lg:col-span-2">
