@@ -1,4 +1,6 @@
 <script setup>
+import { Form } from "vee-validate";
+
 const props = defineProps({
   title: {
     type: String,
@@ -7,6 +9,22 @@ const props = defineProps({
 });
 
 const { title } = props;
+
+const eventname = ref("");
+const fullday = ref(false);
+const fromtime = ref("");
+const totime = ref("");
+const people = ref(null);
+
+function onSubmit() {
+  console.log(
+    eventname.value,
+    fullday.value,
+    fromtime.value,
+    totime.value,
+    people.value
+  );
+}
 </script>
 
 <template>
@@ -58,10 +76,10 @@ const { title } = props;
         <div class="mt-0">
           <div class="md:grid md:grid-cols-2 md:gap-6">
             <div class="mt-5 md:mt-0 md:col-span-2">
-              <form action="#" method="POST">
+              <Form @submit="onSubmit">
                 <div class="shadow overflow-hidden sm:rounded-md">
                   <div class="px-4 py-5 bg-white">
-                    <div class="grid grid-cols-6 gap-6">
+                    <div class="grid grid-cols-6 gap-4">
                       <div class="col-span-4">
                         <label
                           for="first-name"
@@ -78,34 +96,82 @@ const { title } = props;
                         />
                       </div>
 
-                      <div class="col-span-6">
+                      <div class="col-span-6 flex flex-col">
                         <label
                           for="street-address"
                           class="block text-sm font-medium text-gray-700"
-                          >Date</label
+                          >Date/Time</label
                         >
-                        <input
-                          type="text"
-                          name="street-address"
-                          id="street-address"
-                          autocomplete="street-address"
-                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
+                        <div class="flex-row flex">
+                          <Datepicker
+                            placeholder="From"
+                            class="h-12 w-full"
+                            v-model="fromtime"
+                            timePicker
+                            :disabled="fullday"
+                          />
+                          <Datepicker
+                            placeholder="To"
+                            class="h-12 w-full"
+                            v-model="totime"
+                            timePicker
+                            :disabled="fullday"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-span-6 flex items-start">
+                        <div class="flex items-center h-5">
+                          <input
+                            id="remember"
+                            type="checkbox"
+                            v-model="fullday"
+                            value=""
+                            class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                          />
+                        </div>
+                        <label
+                          for="remember"
+                          class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                          >Full Day</label
+                        >
                       </div>
 
-                      <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                      <div class="col-span-6 sm:col-span-6">
                         <label
                           for="city"
                           class="block text-sm font-medium text-gray-700"
                           >Users</label
                         >
-                        <input
-                          type="text"
-                          name="city"
-                          id="city"
-                          autocomplete="address-level2"
-                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
+                        <multiselect
+                          v-model="people"
+                          :multiple="true"
+                          :close-on-select="false"
+                          :clear-on-select="false"
+                          :preserve-search="true"
+                          placeholder="Pick some"
+                          label="name"
+                          track-by="transform"
+                          :preselect-first="false"
+                          :options="[
+                            { name: 'Jason', transform: 'Jason-S1' },
+                            { name: 'Adam', transform: 'Adam-S2' },
+                            { name: 'Felicia', transform: 'Felicia-S2' },
+                            { name: 'Zi Yang', transform: 'Zi Yang-S3' },
+                            { name: 'Paula', transform: 'Paula-S3' },
+                            { name: 'Harry', transform: 'Harry-S1' },
+                          ]"
+                        >
+                          <template
+                            slot="selection"
+                            track-by="name"
+                            slot-scope="{ values, search, isOpen }"
+                            ><span
+                              class="multiselect__single"
+                              v-if="values.length &amp;&amp; !isOpen"
+                              >{{ values.length }} options selected</span
+                            ></template
+                          >
+                        </multiselect>
                       </div>
                     </div>
                   </div>
@@ -118,7 +184,7 @@ const { title } = props;
                     </button>
                   </div>
                 </div>
-              </form>
+              </Form>
             </div>
           </div>
         </div>
