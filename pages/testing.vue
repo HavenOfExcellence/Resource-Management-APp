@@ -45,13 +45,15 @@ function stepmonth(step) {
 }
 
 async function getinfo(dayinfo, monthinfo, yearinfo) {
-  schedule.value = await useLazyFetch("api/event", {
+  const data = await useFetch("api/event", {
     params: {
       day: dayinfo,
       month: monthinfo,
       year: yearinfo,
     },
   }).data;
+
+  schedule.value = data;
   day.value = dayinfo;
 }
 </script>
@@ -130,37 +132,39 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
         <h2 class="text-center my-2 font-semibold text-gray-900 text-base">
           Schedule for {{ month_convert(month) }} {{ day }}, {{ year }}
         </h2>
-        <div
-          class="grid grid-cols-2 items-center"
-          v-for="event in schedule.events"
-        >
-          <div class="h-full">
-            <h2 class="mx-4 font-bold text-sm">{{ event.name }}</h2>
-            <h2 class="mx-4 text-sm">{{ event.time }}</h2>
-          </div>
-          <div class="flex mb-5 -space-x-6 grow">
-            <div v-for="person in event.persons">
-              <ToolTip :message="person">
-                <div
-                  class="relative border border-gray-300 w-10 h-10 overflow-hidden bg-gray-100 rounded-full"
-                >
-                  <svg
-                    class="absolute w-12 h-12 text-gray-400 -left-1"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
+        <div v-if="schedule.events !== []">
+          <div
+            class="grid grid-cols-2 items-center"
+            v-for="event in schedule.events"
+          >
+            <div class="h-full">
+              <h2 class="mx-4 font-bold text-sm">{{ event.name }}</h2>
+              <h2 class="mx-4 text-sm">{{ event.time }}</h2>
+            </div>
+            <div class="flex mb-5 -space-x-6 grow">
+              <div v-for="person in event.persons" :key="person">
+                <ToolTip :message="person">
+                  <div
+                    class="relative border border-gray-300 w-10 h-10 overflow-hidden bg-gray-100 rounded-full"
                   >
-                    <path
-                      fill-rule="evenodd"
-                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                  <h2>
-                    {{ person[0].toUpperCase() }}
-                  </h2>
-                </div>
-              </ToolTip>
+                    <svg
+                      class="absolute w-12 h-12 text-gray-400 -left-1"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <h2>
+                      {{ person[0].toUpperCase() }}
+                    </h2>
+                  </div>
+                </ToolTip>
+              </div>
             </div>
           </div>
         </div>
@@ -173,5 +177,6 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
   </div>
   {{ start_day }}
   {{ counter }}
+  ------------------
   {{ schedule }}
 </template>
