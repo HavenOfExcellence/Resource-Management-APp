@@ -184,7 +184,5 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
   {{ counter }}
   ------------------
   {{ schedule }}
-  {{ year }}
-  {{ month }}
-  {{ day }}
+
 </template>

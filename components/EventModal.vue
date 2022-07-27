@@ -16,6 +16,20 @@ const fromtime = ref("");
 const totime = ref("");
 const people = ref(null);
 
+const names = ref([
+  { name: "Jason", transform: "Jason-S1" },
+  { name: "Adam", transform: "Adam-S2" },
+  { name: "Felicia", transform: "Felicia-S2" },
+  { name: "Zi Yang", transform: "Zi Yang-S3" },
+  { name: "Paula", transform: "Paula-S3" },
+  { name: "Harry", transform: "Harry-S1" },
+]);
+
+onMounted(async () => {
+  data = await useFetch("/api/users").data;
+  console.log(data);
+});
+
 function onSubmit() {
   console.log(
     eventname.value,
@@ -35,7 +49,7 @@ function onSubmit() {
   >
     {{ title }}
   </button>
-
+  {{ names }}
   <!-- Main modal -->
   <div
     id="defaultModal"
@@ -152,14 +166,7 @@ function onSubmit() {
                           label="name"
                           track-by="transform"
                           :preselect-first="false"
-                          :options="[
-                            { name: 'Jason', transform: 'Jason-S1' },
-                            { name: 'Adam', transform: 'Adam-S2' },
-                            { name: 'Felicia', transform: 'Felicia-S2' },
-                            { name: 'Zi Yang', transform: 'Zi Yang-S3' },
-                            { name: 'Paula', transform: 'Paula-S3' },
-                            { name: 'Harry', transform: 'Harry-S1' },
-                          ]"
+                          :options="names"
                         >
                           <template
                             slot="selection"
