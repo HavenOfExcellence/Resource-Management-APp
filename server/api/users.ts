@@ -1,9 +1,13 @@
 import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
-  const user = await prisma.user.findMany();
+  const prisma = new PrismaClient();
+  const user = await prisma.user.findMany({
+    select: {
+      name: true,
+    },
+  });
   console.log(user);
   console.log("asdasd");
-  return { user };
+  return user;
 });

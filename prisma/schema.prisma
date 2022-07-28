@@ -21,8 +21,11 @@ model User {
 }
 
 model Event {
-  id    String    @id @default(uuid())
-  name  String?
-  date  DateTime?
-  users User[]
+  id       String    @id @default(uuid())
+  name     String?
+  date     DateTime?
+  startime DateTime?
+  endtime  DateTime?
+  fullday  Boolean
+  users    User[]
 }

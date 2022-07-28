@@ -10,34 +10,30 @@ const props = defineProps({
 
 const { title } = props;
 
-const eventname = ref("");
-const fullday = ref(false);
+const eventname = ref("Test title");
+const fullday = ref(true);
 const fromtime = ref("");
 const totime = ref("");
 const people = ref(null);
+const defaultModal = ref(null);
+const status = ref("asdasd");
 
-const names = ref([
-  { name: "Jason", transform: "Jason-S1" },
-  { name: "Adam", transform: "Adam-S2" },
-  { name: "Felicia", transform: "Felicia-S2" },
-  { name: "Zi Yang", transform: "Zi Yang-S3" },
-  { name: "Paula", transform: "Paula-S3" },
-  { name: "Harry", transform: "Harry-S1" },
-]);
+const { data: names } = await useFetch("/api/users");
 
-onMounted(async () => {
-  data = await useFetch("/api/users").data;
-  console.log(data);
-});
+console.log(names.value);
 
-function onSubmit() {
-  console.log(
-    eventname.value,
-    fullday.value,
-    fromtime.value,
-    totime.value,
-    people.value
-  );
+async function onSubmit() {
+  console.log("asd");
+  status.value = await useFetch("/api/newevent", {
+    method: "POST",
+    body: {
+      title: eventname.value,
+      fullday: fullday.value,
+      fromtime: fromtime.value,
+      totime: totime.value,
+      people: people.value,
+    },
+  });
 }
 </script>
 
@@ -49,9 +45,10 @@ function onSubmit() {
   >
     {{ title }}
   </button>
-  {{ names }}
+  {{ status }}
   <!-- Main modal -->
   <div
+    ref="defaultModal"
     id="defaultModal"
     tabindex="-1"
     aria-hidden="true"
@@ -104,6 +101,7 @@ function onSubmit() {
                         <input
                           type="text"
                           name="first-name"
+                          v-model="eventname"
                           id="first-name"
                           autocomplete="given-name"
                           class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -164,7 +162,7 @@ function onSubmit() {
                           :preserve-search="true"
                           placeholder="Pick some"
                           label="name"
-                          track-by="transform"
+                          track-by="name"
                           :preselect-first="false"
                           :options="names"
                         >
