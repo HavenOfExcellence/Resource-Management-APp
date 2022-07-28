@@ -20,9 +20,9 @@ export default defineEventHandler(async (event) => {
         name: title,
         fullday,
         users: {
-          connect: {
-            id: "195d0169-247f-465a-a0ce-81e6aa855b69",
-          },
+          connect: people.map((person) => ({
+            id: person.id,
+          })),
         },
       },
     });
