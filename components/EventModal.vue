@@ -55,7 +55,6 @@ async function onSubmit() {
     {{ month }}
     {{ day }}
   </button>
-  {{ status }}
   <!-- Main modal -->
   <div
     ref="defaultModal"

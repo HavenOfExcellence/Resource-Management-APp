@@ -26,6 +26,21 @@ export default defineEventHandler(async (event) => {
     });
 
     console.log(event);
+  } else {
+    const event = await prisma.event.create({
+      data: {
+        date: new Date(year, month, day),
+        name: title,
+        fullday,
+        fromtime: fromtime,
+        totime: totime,
+        users: {
+          connect: people.map((person) => ({
+            id: person.id,
+          })),
+        },
+      },
+    });
   }
 
   return "Working";
