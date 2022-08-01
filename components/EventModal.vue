@@ -1,5 +1,6 @@
 <script setup>
-import { Form, Field } from "vee-validate";
+import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
 
 const props = defineProps({
   title: {
@@ -24,7 +25,13 @@ const day = useState("day");
 
 const { data: names } = await useFetch("/api/users");
 
-console.log(names.value);
+const schema = yup.schema({
+  eventname: yup.string().required("Event name is required"),
+  fullday: yup.boolean().required("Full day is required"),
+  // fromtime: yup.string().required("From time is required"),
+  // totime: yup.string().required("To time is required"),
+  people: yup.array().required("People is required"),
+});
 
 async function onSubmit(values) {
   console.log(values);
@@ -197,6 +204,13 @@ async function onSubmit(values) {
                           </multiselect>
                         </Field>
                       </div>
+                      <!-- <div class="col-span-6">
+                        <ErrorMessage name="eventname"></ErrorMessage>
+                        <ErrorMessage name="fromtime"></ErrorMessage>
+                        <ErrorMessage name="fullday"></ErrorMessage>
+                        <ErrorMessage name="people"></ErrorMessage>
+                        <ErrorMessage name="totime"></ErrorMessage>
+                      </div> -->
                     </div>
                   </div>
                   <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
