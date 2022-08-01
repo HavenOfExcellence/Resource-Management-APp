@@ -1,8 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-
+import prisma from "~~/utils/Prisma";
 export default defineEventHandler(async (event) => {
-  const prisma = new PrismaClient();
-
   const { title, fullday, fromtime, totime, people } = await useBody(event);
 
   console.log({ title, fullday, fromtime, totime, people });
