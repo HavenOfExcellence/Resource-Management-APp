@@ -1,5 +1,5 @@
 <script setup>
-import { Form } from "vee-validate";
+import { Form, Field } from "vee-validate";
 
 const props = defineProps({
   title: {
@@ -26,21 +26,21 @@ const { data: names } = await useFetch("/api/users");
 
 console.log(names.value);
 
-async function onSubmit() {
-  console.log("asd");
-  status.value = await useFetch("/api/newevent", {
-    method: "POST",
-    body: {
-      title: eventname.value,
-      fullday: fullday.value,
-      fromtime: fromtime.value,
-      totime: totime.value,
-      people: people.value,
-      year: year.value,
-      month: month.value,
-      day: day.value,
-    },
-  });
+async function onSubmit(values) {
+  console.log(values);
+  // status.value = await useFetch("/api/newevent", {
+  //   method: "POST",
+  //   body: {
+  //     title: eventname.value,
+  //     fullday: fullday.value,
+  //     fromtime: fromtime.value,
+  //     totime: totime.value,
+  //     people: people.value,
+  //     year: year.value,
+  //     month: month.value,
+  //     day: day.value,
+  //   },
+  // });
 }
 </script>
 
@@ -124,13 +124,17 @@ async function onSubmit() {
                           >Date/Time</label
                         >
                         <div class="flex-row flex">
-                          <Datepicker
-                            placeholder="From"
-                            class="h-12 w-full"
-                            v-model="fromtime"
-                            timePicker
-                            :disabled="fullday"
-                          />
+                          <Field name="fromtime" v-slot="{ field }" type="text">
+                            <Datepicker
+                              v-bind="field"
+                              v-model="fromtime"
+                              placeholder="From"
+                              name="fromtime"
+                              class="h-12 w-full"
+                              timePicker
+                              :disabled="fullday"
+                            />
+                          </Field>
                           <Datepicker
                             placeholder="To"
                             class="h-12 w-full"
