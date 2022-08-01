@@ -6,9 +6,9 @@ import {
   getmaxdateofmonth,
 } from "@/utils/Calendar";
 
-const year = ref(2022);
-const month = ref(new Date().getMonth() + 1);
-const day = ref(0);
+const year = useState("year", () => new Date().getFullYear());
+const month = useState("month", () => new Date().getMonth() + 1);
+const day = useState(0);
 
 const start_day = ref(getfirstdateofmonth(month.value, year.value));
 const end_day = ref(getmaxdateofmonth(month.value, year.value));
