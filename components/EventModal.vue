@@ -18,6 +18,10 @@ const people = ref(null);
 const defaultModal = ref(null);
 const status = ref("asdasd");
 
+const year = useState("year");
+const month = useState("month");
+const day = useState("day");
+
 const { data: names } = await useFetch("/api/users");
 
 console.log(names.value);
@@ -32,6 +36,9 @@ async function onSubmit() {
       fromtime: fromtime.value,
       totime: totime.value,
       people: people.value,
+      year: year.value,
+      month: month.value,
+      day: day.value,
     },
   });
 }
@@ -44,6 +51,9 @@ async function onSubmit() {
     data-modal-toggle="defaultModal"
   >
     {{ title }}
+    {{ year }}
+    {{ month }}
+    {{ day }}
   </button>
   {{ status }}
   <!-- Main modal -->
