@@ -11,7 +11,7 @@ const props = defineProps({
 const { title } = props;
 
 const eventname = ref("Test title");
-const fullday = ref(true);
+const fullday = ref(false);
 const fromtime = ref("");
 const totime = ref("");
 const people = ref(null);
@@ -107,12 +107,11 @@ async function onSubmit(values) {
                           >Event Name</label
                         >
 
-                        <input
+                        <Field
                           type="text"
-                          name="first-name"
+                          name="eventname"
                           v-model="eventname"
                           id="first-name"
-                          autocomplete="given-name"
                           class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
                       </div>
@@ -135,22 +134,26 @@ async function onSubmit(values) {
                               :disabled="fullday"
                             />
                           </Field>
-                          <Datepicker
-                            placeholder="To"
-                            class="h-12 w-full"
-                            v-model="totime"
-                            timePicker
-                            :disabled="fullday"
-                          />
+                          <Field name="totime" v-slot="{ field }" type="text">
+                            <Datepicker
+                              v-bind="field"
+                              v-model="totime"
+                              placeholder="To"
+                              name="totime"
+                              class="h-12 w-full"
+                              timePicker
+                              :disabled="fullday"
+                            />
+                          </Field>
                         </div>
                       </div>
                       <div class="col-span-6 flex items-start">
                         <div class="flex items-center h-5">
-                          <input
-                            id="remember"
-                            type="checkbox"
+                          <Field
                             v-model="fullday"
-                            value=""
+                            name="fullday"
+                            type="checkbox"
+                            value="true"
                             class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                           />
                         </div>
@@ -167,29 +170,32 @@ async function onSubmit(values) {
                           class="block text-sm font-medium text-gray-700"
                           >Users</label
                         >
-                        <multiselect
-                          v-model="people"
-                          :multiple="true"
-                          :close-on-select="false"
-                          :clear-on-select="false"
-                          :preserve-search="true"
-                          placeholder="Pick some"
-                          label="name"
-                          track-by="name"
-                          :preselect-first="false"
-                          :options="names"
-                        >
-                          <template
-                            slot="selection"
+                        <Field name="people" v-slot="{ field }" type="text">
+                          <multiselect
+                            v-model="people"
+                            v-bind="field"
+                            :multiple="true"
+                            :close-on-select="false"
+                            :clear-on-select="false"
+                            :preserve-search="true"
+                            placeholder="Pick some"
+                            label="name"
                             track-by="name"
-                            slot-scope="{ values, search, isOpen }"
-                            ><span
-                              class="multiselect__single"
-                              v-if="values.length &amp;&amp; !isOpen"
-                              >{{ values.length }} options selected</span
-                            ></template
+                            :preselect-first="false"
+                            :options="names"
                           >
-                        </multiselect>
+                            <template
+                              slot="selection"
+                              track-by="name"
+                              slot-scope="{ values, search, isOpen }"
+                              ><span
+                                class="multiselect__single"
+                                v-if="values.length &amp;&amp; !isOpen"
+                                >{{ values.length }} options selected</span
+                              ></template
+                            >
+                          </multiselect>
+                        </Field>
                       </div>
                     </div>
                   </div>
