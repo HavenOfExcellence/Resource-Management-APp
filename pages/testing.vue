@@ -173,7 +173,10 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
             </div>
           </div>
         </div>
-        <div class="grow">asd</div>
+        <div v-if="schedule.events.length == 0" class="grow">
+          There are currently no events on this date
+        </div>
+        <div v-else="" class="grow"></div>
         <div class="flex items-center justify-center">
           <EventModal title="New Event" />
         </div>
@@ -184,5 +187,4 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
   {{ counter }}
   ------------------
   {{ schedule }}
-
 </template>
