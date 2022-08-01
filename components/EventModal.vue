@@ -25,13 +25,13 @@ const day = useState("day");
 
 const { data: names } = await useFetch("/api/users");
 
-const schema = yup.schema({
-  eventname: yup.string().required("Event name is required"),
-  fullday: yup.boolean().required("Full day is required"),
-  // fromtime: yup.string().required("From time is required"),
-  // totime: yup.string().required("To time is required"),
-  people: yup.array().required("People is required"),
-});
+// const schema = yup.schema({
+//   eventname: yup.string().required("Event name is required"),
+//   fullday: yup.boolean().required("Full day is required"),
+//   // fromtime: yup.string().required("From time is required"),
+//   // totime: yup.string().required("To time is required"),
+//   people: yup.array().required("People is required"),
+// });
 
 async function onSubmit(values) {
   console.log(values);
