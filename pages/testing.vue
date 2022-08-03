@@ -13,6 +13,13 @@ const day = useState("day", () => 0);
 const start_day = ref(getfirstdateofmonth(month.value, year.value));
 const end_day = ref(getmaxdateofmonth(month.value, year.value));
 
+const eventdates = await useFetch("/api/eventmonth", {
+  params: {
+    year: year.value,
+    month: month.value,
+  },
+});
+
 const schedule = reactive(
   ref({
     date: "070422",
@@ -30,8 +37,6 @@ const schedule = reactive(
     ],
   })
 );
-
-const counter = useState("counter", () => 123);
 
 function stepmonth(step) {
   month.value = month.value + step;
@@ -118,9 +123,10 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
             <div v-for="item in start_day - 1"></div>
             <button @click="getinfo(numb, month, year)" v-for="numb in end_day">
               <p>{{ numb }}</p>
-              <!-- <span
+              <span
                 class="w-3.5 h-3.5 bg-blue-300 border-2 border-white rounded-full"
-              ></span> -->
+                >.</span
+              >
             </button>
           </div>
         </div>
@@ -183,6 +189,7 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
       </div>
     </div>
   </div>
+  {{ eventdates }}
   {{ start_day }}
   {{ counter }}
   ------------------
