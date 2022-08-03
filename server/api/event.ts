@@ -1,5 +1,7 @@
-import prisma from "~~/utils/Prisma";
+import { PrismaClient } from "@prisma/client";
+
 export default defineEventHandler(async (event) => {
+  const prisma = new PrismaClient();
   const { day, month, year } = useQuery(event);
 
   const date = await prisma.event.findMany({
