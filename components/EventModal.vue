@@ -1,7 +1,7 @@
 <script setup>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
-
+import { month_convert } from "@/utils/Calendar";
 const props = defineProps({
   title: {
     type: String,
@@ -35,6 +35,7 @@ const { data: names } = await useFetch("/api/users");
 
 async function onSubmit(values) {
   console.log(values);
+  console.log({ year, month, day });
   // status.value = await useFetch("/api/newevent", {
   //   method: "POST",
   //   body: {
@@ -58,9 +59,6 @@ async function onSubmit(values) {
     data-modal-toggle="defaultModal"
   >
     {{ title }}
-    {{ year }}
-    {{ month }}
-    {{ day }}
   </button>
   <!-- Main modal -->
   <div
@@ -78,7 +76,7 @@ async function onSubmit(values) {
           class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600"
         >
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-            New Event
+            New Event {{ month_convert(month) }} {{ day }}, {{ year }}
           </h3>
           <button
             type="button"
@@ -101,6 +99,7 @@ async function onSubmit(values) {
         </div>
         <!-- Modal body -->
         <div class="mt-0">
+          {{ day }}
           <div class="md:grid md:grid-cols-2 md:gap-6">
             <div class="mt-5 md:mt-0 md:col-span-2">
               <Form @submit="onSubmit">
@@ -204,13 +203,13 @@ async function onSubmit(values) {
                           </multiselect>
                         </Field>
                       </div>
-                      <!-- <div class="col-span-6">
+                      <div class="col-span-6">
                         <ErrorMessage name="eventname"></ErrorMessage>
                         <ErrorMessage name="fromtime"></ErrorMessage>
                         <ErrorMessage name="fullday"></ErrorMessage>
                         <ErrorMessage name="people"></ErrorMessage>
                         <ErrorMessage name="totime"></ErrorMessage>
-                      </div> -->
+                      </div>
                     </div>
                   </div>
                   <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">

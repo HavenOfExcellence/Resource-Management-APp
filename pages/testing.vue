@@ -8,7 +8,7 @@ import {
 
 const year = useState("year", () => new Date().getFullYear());
 const month = useState("month", () => new Date().getMonth() + 1);
-const day = useState("day", () => 0);
+const day = useState("day", () => new Date().getDate());
 
 const start_day = ref(getfirstdateofmonth(month.value, year.value));
 const end_day = ref(getmaxdateofmonth(month.value, year.value));
@@ -193,9 +193,5 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
       </div>
     </div>
   </div>
-  {{ eventdates }}
-  {{ start_day }}
-  {{ counter }}
-  ------------------
-  {{ schedule }}
+  {{ day }}
 </template>
