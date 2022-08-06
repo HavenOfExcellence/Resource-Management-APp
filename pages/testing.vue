@@ -18,7 +18,7 @@ const eventdates = await useFetch("/api/eventmonth", {
     year: year.value,
     month: month.value,
   },
-});
+}).data;
 
 const schedule = reactive(
   ref({
@@ -121,12 +121,16 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
             class="pb-3 grid grid-cols-7 gap-y-6 text-sm justify-items-center text-700"
           >
             <div v-for="item in start_day - 1"></div>
-            <button @click="getinfo(numb, month, year)" v-for="numb in end_day">
+            <button
+              @click="getinfo(numb, month, year)"
+              v-for="numb in end_day"
+              class="flex flex-col items-center"
+            >
               <p>{{ numb }}</p>
-              <span
-                class="w-3.5 h-3.5 bg-blue-300 border-2 border-white rounded-full"
-                >.</span
-              >
+              <div
+                v-if="eventdates[numb - 1] !== 0"
+                class="w-1 h-1 bg-blue-500 rounded-full"
+              ></div>
             </button>
           </div>
         </div>
