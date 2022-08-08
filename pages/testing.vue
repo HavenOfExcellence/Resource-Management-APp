@@ -14,12 +14,18 @@ const day = useState("day", () => 3);
 const start_day = ref(getfirstdateofmonth(month.value, year.value));
 const end_day = ref(getmaxdateofmonth(month.value, year.value));
 
-const eventdates = await useLazyFetch("/api/eventmonth", {
-  params: {
-    year: year.value,
-    month: month.value,
-  },
-}).data;
+const {
+  data: eventdates,
+  refresh: refreshmonth,
+  pending: pendingmonth,
+} = await useAsyncData("eventdates", () =>
+  $fetch("/api/eventmonth", {
+    params: {
+      year: year.value,
+      month: month.value,
+    },
+  })
+);
 
 const {
   data: schedule,
@@ -49,6 +55,8 @@ function stepmonth(step) {
 
   start_day.value = getfirstdateofmonth(month.value, year.value);
   end_day.value = getmaxdateofmonth(month.value, year.value);
+
+  refreshmonth();
 }
 
 async function getinfo(numb) {
