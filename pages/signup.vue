@@ -10,7 +10,7 @@ async function onSubmit(values) {
     return;
   }
 
-  const data = await useFetch("/api/signup", {
+  const data = await useLazyFetch("/api/signup", {
     params: {
       email: values.email,
       password: values.password,
@@ -18,11 +18,9 @@ async function onSubmit(values) {
       name,
     },
   });
-
-  console.log(values);
 }
 
-const hubs = await useFetch("/api/hub").data;
+const hubs = await useLazyFetch("/api/hub").data;
 
 const schema = yup.object({
   email: yup.string().email("Invalid Email").required("Email is required"),
@@ -33,7 +31,6 @@ defineRule("confirmed", (value, [other]) => {
   if (value !== other) {
     return `Passwords do not match`;
   }
-  console.log("asdasd");
   return true;
 });
 

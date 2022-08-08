@@ -3,8 +3,7 @@ import { Form } from "vee-validate";
 import * as yup from "yup";
 
 async function onSubmit(values) {
-  console.log(values);
-  const data = await useFetch("/api/authentication", {
+  const data = await useLazyFetch("/api/authentication", {
     params: {
       email: values.email,
       password: values.password,
@@ -12,7 +11,6 @@ async function onSubmit(values) {
   });
 
   const auth = data.data.value.auth;
-  console.log(auth);
   if (auth) {
     navigateTo("/testing");
   }

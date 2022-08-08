@@ -11,8 +11,6 @@ function getmaxdateofmonth(month, year) {
   return new Date(year, month, 0).getDate();
 }
 
-console.log(getmaxdateofmonth(7, 2022));
-
 function month_convert(month: number) {
   const months = [
     "January",

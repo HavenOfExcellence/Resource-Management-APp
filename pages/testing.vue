@@ -8,33 +8,30 @@ import {
 
 const year = useState("year", () => new Date().getFullYear());
 const month = useState("month", () => new Date().getMonth() + 1);
-const day = useState("day", () => new Date().getDate());
+// const day = useState("day", () => new Date().getDate());
+const day = useState("day", () => 3);
 
 const start_day = ref(getfirstdateofmonth(month.value, year.value));
 const end_day = ref(getmaxdateofmonth(month.value, year.value));
 
-const eventdates = await useFetch("/api/eventmonth", {
+const eventdates = await useLazyFetch("/api/eventmonth", {
   params: {
     year: year.value,
     month: month.value,
   },
 }).data;
 
-const schedule = reactive(
-  ref({
-    date: "070422",
-    events: [
-      {
-        name: "SAF Parade",
-        persons: ["ziyang", "andrew"],
-        time: "Full Day",
-      },
-      {
-        name: "Conference",
-        persons: ["Daniel", "Denzel"],
-        time: "2:00 PM to 3:00 PM",
-      },
-    ],
+const {
+  data: schedule,
+  refresh,
+  pending,
+} = await useAsyncData("schedule", () =>
+  $fetch("/api/event", {
+    params: {
+      day: day.value,
+      month: month.value,
+      year: year.value,
+    },
   })
 );
 
@@ -54,18 +51,10 @@ function stepmonth(step) {
   end_day.value = getmaxdateofmonth(month.value, year.value);
 }
 
-async function getinfo(dayinfo, monthinfo, yearinfo) {
-  console.log("getting info");
-  const data = await useFetch("api/event", {
-    params: {
-      day: dayinfo,
-      month: monthinfo,
-      year: yearinfo,
-    },
-  }).data;
+async function getinfo(numb) {
+  day.value = numb;
 
-  schedule.value = data;
-  day.value = dayinfo;
+  refresh();
 }
 </script>
 
@@ -123,7 +112,7 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
           >
             <div v-for="item in start_day - 1"></div>
             <button
-              @click="getinfo(numb, month, year)"
+              @click="getinfo(numb)"
               v-for="numb in end_day"
               class="flex flex-col items-center"
             >
@@ -137,18 +126,13 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
         </div>
       </div>
       <div class="bg-white border border-gray-200 rounded flex flex-col">
-        <!-- <body v-if="schedule.events == []" class="">
-            <h2 class="font-semibold text-gray-900">Schedule for Today</h2>
-            <ol class="mt-4 space-y-1 text-sm leading-6 text-gray-500">
-              <p>No meetings for today.</p>
-            </ol>
-          </body> -->
-        <!-- Insidee Right -->
-
         <h2 class="text-center my-2 font-semibold text-gray-900 text-base">
           Schedule for {{ month_convert(month) }} {{ day }}, {{ year }}
         </h2>
-        <div v-if="schedule.events !== []">
+        <div v-if="!pending">
+          <div v-if="schedule.events.length === 0">
+            There are currently no events on this date
+          </div>
           <div
             class="grid grid-cols-2 items-center"
             v-for="event in schedule.events"
@@ -184,10 +168,8 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
             </div>
           </div>
         </div>
-        <div v-if="schedule.events.length == 0" class="grow">
-          There are currently no events on this date
-        </div>
-        <div v-else="" class="grow"></div>
+        <div v-else>There are currently no events on this date</div>
+        <div class="grow"></div>
         <div class="flex items-center justify-center">
           <EventModal title="New Event" />
         </div>
@@ -195,6 +177,9 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
     </div>
     {{ day }}
     {{ eventdates }}
+    ----
     {{ schedule }}
+    {{ pending }}
+    --
   </div>
 </template>

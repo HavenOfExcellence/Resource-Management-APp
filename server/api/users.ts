@@ -7,7 +7,5 @@ export default defineEventHandler(async (event) => {
       id: true,
     },
   });
-  console.log(user);
-  console.log("asdasd");
   return user;
 });

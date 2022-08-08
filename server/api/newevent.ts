@@ -25,8 +25,6 @@ export default defineEventHandler(async (event) => {
         },
       },
     });
-
-    console.log(event);
   } else {
     const event = await prisma.event.create({
       data: {

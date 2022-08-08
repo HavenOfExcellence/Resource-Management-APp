@@ -23,7 +23,7 @@ const year = useState("year");
 const month = useState("month");
 const day = useState("day");
 
-const { data: names } = await useFetch("/api/users");
+const { data: names } = await useLazyFetch("/api/users");
 
 // const schema = yup.schema({
 //   eventname: yup.string().required("Event name is required"),
@@ -34,9 +34,7 @@ const { data: names } = await useFetch("/api/users");
 // });
 
 async function onSubmit(values) {
-  console.log(values);
-  console.log({ year, month, day, fullday });
-  status.value = await useFetch("/api/newevent", {
+  status.value = await useLazyFetch("/api/newevent", {
     method: "POST",
     body: {
       title: eventname.value,
