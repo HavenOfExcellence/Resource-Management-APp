@@ -35,20 +35,20 @@ const { data: names } = await useFetch("/api/users");
 
 async function onSubmit(values) {
   console.log(values);
-  console.log({ year, month, day });
-  // status.value = await useFetch("/api/newevent", {
-  //   method: "POST",
-  //   body: {
-  //     title: eventname.value,
-  //     fullday: fullday.value,
-  //     fromtime: fromtime.value,
-  //     totime: totime.value,
-  //     people: people.value,
-  //     year: year.value,
-  //     month: month.value,
-  //     day: day.value,
-  //   },
-  // });
+  console.log({ year, month, day, fullday });
+  status.value = await useFetch("/api/newevent", {
+    method: "POST",
+    body: {
+      title: eventname.value,
+      fullday: fullday.value,
+      fromtime: fromtime.value,
+      totime: totime.value,
+      people: people.value,
+      year: year.value,
+      month: month.value,
+      day: day.value,
+    },
+  });
 }
 </script>
 
@@ -159,7 +159,7 @@ async function onSubmit(values) {
                             v-model="fullday"
                             name="fullday"
                             type="checkbox"
-                            value="true"
+                            :value="true"
                             class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                           />
                         </div>

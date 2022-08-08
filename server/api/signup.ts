@@ -1,14 +1,17 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "~~/utils/Prisma";
 
 export default defineEventHandler(async (event) => {
-  const prisma = new PrismaClient();
-  const { email, password, hub } = useQuery(event);
+  const { email, password, branch, name } = useQuery(event);
+
+  console.log(branch);
+  const hubid = branch.id;
 
   const user = await prisma.user.create({
     data: {
       email,
       password,
-      hub,
+      hubId: hubid,
+      name,
     },
   });
 

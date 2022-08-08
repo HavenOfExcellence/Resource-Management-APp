@@ -17,7 +17,8 @@ model User {
   password String?
   Event    Event?  @relation(fields: [eventId], references: [id])
   eventId  String?
-  hub      String?
+  hub      Hub?    @relation(fields: [hubId], references: [id])
+  hubId    String?
 }
 
 model Event {
@@ -28,4 +29,10 @@ model Event {
   endtime  String?
   fullday  Boolean
   users    User[]
+}
+
+model Hub {
+  id   String  @id @default(uuid())
+  name String?
+  User User[]
 }

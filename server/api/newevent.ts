@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "~~/utils/Prisma";
 
 export default defineEventHandler(async (event) => {
-  const prisma = new PrismaClient();
   const { title, year, month, day, fullday, fromtime, totime, people } =
     await useBody(event);
 
@@ -16,7 +15,7 @@ export default defineEventHandler(async (event) => {
   if (fullday) {
     const event = await prisma.event.create({
       data: {
-        date: new Date(year, month, day),
+        date: new Date(year, month - 1, day),
         name: title,
         fullday,
         users: {
@@ -31,7 +30,7 @@ export default defineEventHandler(async (event) => {
   } else {
     const event = await prisma.event.create({
       data: {
-        date: new Date(year, month, day),
+        date: new Date(year, month - 1, day),
         name: title,
         fullday,
         fromtime: fromtime,
@@ -44,6 +43,6 @@ export default defineEventHandler(async (event) => {
       },
     });
   }
-
+  console.log(event);
   return "Working";
 });

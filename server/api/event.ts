@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "~~/utils/Prisma";
 
 export default defineEventHandler(async (event) => {
-  const prisma = new PrismaClient();
   const { day, month, year } = useQuery(event);
 
   const date = await prisma.event.findMany({
@@ -9,7 +8,11 @@ export default defineEventHandler(async (event) => {
       date: new Date(`${year}-${month}-${day}`),
     },
     include: {
-      users: true,
+      users: {
+        include: {
+          hub: true,
+        },
+      },
     },
   });
 
@@ -19,7 +22,7 @@ export default defineEventHandler(async (event) => {
     return {
       name: event.name,
       persons: event.users.map((user) => {
-        return user.name;
+        return `${user.name} - ${user.hub.name}`;
       }),
       time: "Full Day",
     };

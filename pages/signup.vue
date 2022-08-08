@@ -1,9 +1,9 @@
 <script setup>
-import { Form, defineRule } from "vee-validate";
+import { Form, Field, defineRule } from "vee-validate";
 import * as yup from "yup";
 
 async function onSubmit(values) {
-  const { email, password, password2, hub } = values;
+  const { email, password, password2, branch } = values;
 
   if (password !== password2) {
     alert("Passwords should match");
@@ -14,13 +14,15 @@ async function onSubmit(values) {
     params: {
       email: values.email,
       password: values.password,
-      hub: values.hub,
+      branch,
+      name,
     },
   });
 
-  console.log(data.data.value);
   console.log(values);
 }
+
+const hubs = await useFetch("/api/hub").data;
 
 const schema = yup.object({
   email: yup.string().email("Invalid Email").required("Email is required"),
@@ -34,7 +36,10 @@ defineRule("confirmed", (value, [other]) => {
   console.log("asdasd");
   return true;
 });
+
+const hublist = ref(null);
 </script>
+
 <template>
   <div
     class="mt-10 sm:mt-0 fixed w-full h-full bg-yellow-200 flex justify-center items-center"
@@ -56,6 +61,21 @@ defineRule("confirmed", (value, [other]) => {
                     <FormField
                       type="text"
                       name="email"
+                      autocomplete="street-address"
+                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    />
+                  </div>
+                </div>
+                <div class="col-span-6">
+                  <label
+                    for="street-address"
+                    class="block text-sm font-medium text-gray-700"
+                    >Name</label
+                  >
+                  <div>
+                    <FormField
+                      type="text"
+                      name="name"
                       autocomplete="street-address"
                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
@@ -98,14 +118,37 @@ defineRule("confirmed", (value, [other]) => {
                     class="block text-sm font-medium text-gray-700"
                     >Hub</label
                   >
-                  <div>
-                    <FormField
-                      type="text"
-                      name="hub"
-                      autocomplete="street-address"
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
-                  </div>
+                  <Field
+                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    name="branch"
+                    v-slot="{ field }"
+                    type="text"
+                  >
+                    <multiselect
+                      v-model="hublist"
+                      v-bind="field"
+                      :multiple="false"
+                      :close-on-select="false"
+                      :clear-on-select="false"
+                      :preserve-search="true"
+                      placeholder="Pick some"
+                      label="name"
+                      track-by="name"
+                      :preselect-first="false"
+                      :options="hubs"
+                    >
+                      <template
+                        slot="selection"
+                        track-by="name"
+                        slot-scope="{ values, search, isOpen }"
+                        ><span
+                          class="multiselect__single"
+                          v-if="values.length &amp;&amp; !isOpen"
+                          >{{ values.length }} options selected</span
+                        ></template
+                      >
+                    </multiselect>
+                  </Field>
                 </div>
               </div>
             </div>

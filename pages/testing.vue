@@ -55,6 +55,7 @@ function stepmonth(step) {
 }
 
 async function getinfo(dayinfo, monthinfo, yearinfo) {
+  console.log("getting info");
   const data = await useFetch("api/event", {
     params: {
       day: dayinfo,
@@ -192,6 +193,8 @@ async function getinfo(dayinfo, monthinfo, yearinfo) {
         </div>
       </div>
     </div>
+    {{ day }}
+    {{ eventdates }}
+    {{ schedule }}
   </div>
-  {{ day }}
 </template>
