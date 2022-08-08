@@ -126,9 +126,14 @@ async function getinfo(numb) {
             >
               <p>{{ numb }}</p>
               <div
+                class="flex flex-row gap-2"
                 v-if="eventdates[numb - 1] !== 0"
-                class="w-1 h-1 bg-blue-500 rounded-full"
-              ></div>
+              >
+                <div
+                  v-for="num in eventdates[numb - 1]"
+                  class="w-1 h-1 bg-blue-500 rounded-full"
+                ></div>
+              </div>
             </button>
           </div>
         </div>
