@@ -3,7 +3,6 @@ import prisma from "~~/utils/Prisma";
 export default defineEventHandler(async (event) => {
   const { day, month, year } = useQuery(event);
 
-  console.log({ day, month, year });
   const date = await prisma.event.findMany({
     where: {
       date: new Date(`${year}-${month}-${day}`),
@@ -17,23 +16,26 @@ export default defineEventHandler(async (event) => {
     },
   });
 
-  const events = date.map((event) => {
-    return {
-      name: event.name,
-      persons: event.users.map((user) => {
-        return `${user.name} - ${user.hub.name}`;
-      }),
-      time: "Full Day",
-    };
-  });
+  console.log(date);
 
-  const object = {
+  const events = {
+    events: date.map((event) => {
+      return {
+        name: event.name,
+        persons: event.users.map((user) => {
+          return `${user.name} - ${user.hub.name}`;
+        }),
+        time: event.fullday
+          ? "fullday"
+          : `${event.startime} - ${event.endtime}`,
+      };
+    }),
     date: `${year}-${month}-${day}`,
-    events,
   };
 
-  console.log(object);
-  return object;
+  console.log(events);
+
+  return events;
 
   return {
     date: "070422",

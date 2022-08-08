@@ -26,13 +26,17 @@ export default defineEventHandler(async (event) => {
       },
     });
   } else {
+    console.log(fromtime);
+    console.log(totime);
+    const startime = `${fromtime.hours}:${fromtime.minutes}:${fromtime.seconds}`;
+    const endtime = `${totime.hours}:${totime.minutes}:${totime.seconds}`;
     const event = await prisma.event.create({
       data: {
         date: new Date(year, month - 1, day),
         name: title,
-        fullday,
-        fromtime: fromtime,
-        totime: totime,
+        fullday: false,
+        startime,
+        endtime,
         users: {
           connect: people.map((person) => ({
             id: person.id,
@@ -41,6 +45,5 @@ export default defineEventHandler(async (event) => {
       },
     });
   }
-  console.log(event);
   return "Working";
 });
