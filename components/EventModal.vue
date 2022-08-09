@@ -25,13 +25,13 @@ const day = useState("day");
 
 const { data: names } = await useLazyFetch("/api/users");
 
-// const schema = yup.schema({
-//   eventname: yup.string().required("Event name is required"),
-//   fullday: yup.boolean().required("Full day is required"),
-//   // fromtime: yup.string().required("From time is required"),
-//   // totime: yup.string().required("To time is required"),
-//   people: yup.array().required("People is required"),
-// });
+const schema = yup.object({
+  eventname: yup.string().required("Event name is required"),
+  fullday: yup.boolean().required("Full day is required"),
+  // fromtime: yup.string().required("From time is required"),
+  // totime: yup.string().required("To time is required"),
+  people: yup.array().required("People is required"),
+});
 
 async function onSubmit(values) {
   status.value = await useLazyFetch("/api/newevent", {
@@ -100,7 +100,7 @@ async function onSubmit(values) {
           {{ day }}
           <div class="md:grid md:grid-cols-2 md:gap-6">
             <div class="mt-5 md:mt-0 md:col-span-2">
-              <Form @submit="onSubmit">
+              <Form @submit="onSubmit" :validation-schema="schema">
                 <div class="shadow overflow-hidden sm:rounded-md">
                   <div class="px-4 py-5 bg-white">
                     <div class="grid grid-cols-6 gap-4">
