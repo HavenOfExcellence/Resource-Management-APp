@@ -29,10 +29,20 @@ model Event {
   endtime  String?
   fullday  Boolean
   users    User[]
+  colour   Colour?
 }
 
 model Hub {
-  id   String  @id @default(uuid())
-  name String?
-  User User[]
+  id     String  @id @default(uuid())
+  name   String?
+  User   User[]
+  colour Colour?
+}
+
+enum Colour {
+  RED
+  BLUE
+  GREEN
+  ORANGE
+  VIOLET
 }
