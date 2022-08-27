@@ -1,4 +1,5 @@
 import prisma from "~~/utils/Prisma";
+import { converttime } from "~~/utils/Date";
 
 export default defineEventHandler(async (event) => {
   const { day, month, year } = useQuery(event);
@@ -27,7 +28,7 @@ export default defineEventHandler(async (event) => {
         }),
         time: event.fullday
           ? "fullday"
-          : `${event.startime} - ${event.endtime}`,
+          : `${converttime(event.startime)} - ${converttime(event.endtime)}`,
       };
     }),
     date: `${year}-${month}-${day}`,
