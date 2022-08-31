@@ -2,6 +2,13 @@
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 import { month_convert } from "@/utils/Calendar";
+
+import { Colour } from "@prisma/client";
+
+const colouroptions = Object.keys(Colour).filter((item) => {
+  return isNaN(Number(item));
+});
+
 const props = defineProps({
   title: {
     type: String,
@@ -18,6 +25,7 @@ const totime = ref("");
 const people = ref(null);
 const defaultModal = ref(null);
 const status = ref("asdasd");
+const colour = ref("");
 
 const year = useState("year");
 const month = useState("month");
@@ -34,6 +42,7 @@ const schema = yup.object({
 });
 
 async function onSubmit(values) {
+  console.log(values);
   status.value = await useLazyFetch("/api/newevent", {
     method: "POST",
     body: {
@@ -45,6 +54,7 @@ async function onSubmit(values) {
       year: year.value,
       month: month.value,
       day: day.value,
+      colour: colour.value,
     },
   });
 }
@@ -187,6 +197,36 @@ async function onSubmit(values) {
                             track-by="name"
                             :preselect-first="false"
                             :options="names"
+                          >
+                            <template
+                              slot="selection"
+                              track-by="name"
+                              slot-scope="{ values, search, isOpen }"
+                              ><span
+                                class="multiselect__single"
+                                v-if="values.length &amp;&amp; !isOpen"
+                                >{{ values.length }} options selected</span
+                              ></template
+                            >
+                          </multiselect>
+                        </Field>
+                      </div>
+                      <div class="col-span-6 sm:col-span-6">
+                        <label
+                          for="city"
+                          class="block text-sm font-medium text-gray-700"
+                          >Colour</label
+                        >
+                        <Field name="colour" v-slot="{ field }" type="text">
+                          <multiselect
+                            v-model="colour"
+                            v-bind="field"
+                            :close-on-select="false"
+                            :clear-on-select="false"
+                            :preserve-search="true"
+                            placeholder="Pick some"
+                            :preselect-first="false"
+                            :options="colouroptions"
                           >
                             <template
                               slot="selection"

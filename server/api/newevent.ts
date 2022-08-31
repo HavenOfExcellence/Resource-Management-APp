@@ -1,10 +1,20 @@
 import prisma from "~~/utils/Prisma";
 
 export default defineEventHandler(async (event) => {
-  const { title, year, month, day, fullday, fromtime, totime, people } =
+  const { title, year, month, day, fullday, fromtime, totime, people, colour } =
     await useBody(event);
 
-  console.log({ year, month, day, title, fullday, fromtime, totime, people });
+  console.log({
+    year,
+    month,
+    day,
+    title,
+    fullday,
+    fromtime,
+    totime,
+    people,
+    colour,
+  });
 
   // if (!title || !fullday || !fromtime || !totime || !people) {
   //   console.log("missing fields");
@@ -15,6 +25,7 @@ export default defineEventHandler(async (event) => {
   if (fullday) {
     const event = await prisma.event.create({
       data: {
+        colour,
         date: new Date(year, month - 1, day),
         name: title,
         fullday,
