@@ -25,7 +25,11 @@ export default defineEventHandler(async (event) => {
         name: event.name,
         colour: event.colour,
         persons: event.users.map((user) => {
-          return `${user.name} - ${user.hub.name} - ${user.hub.colour}`;
+          return {
+            name: user.name,
+            hub: user.hub.name,
+            colour: user.hub.colour,
+          };
         }),
         time: event.fullday
           ? "fullday"

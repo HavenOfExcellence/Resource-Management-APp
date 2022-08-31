@@ -183,13 +183,13 @@ async function getinfo(numb) {
             </div>
             <div class="flex mb-5 -space-x-6 grow">
               <div v-for="person in event.persons" :key="person">
-                <ToolTip :message="person">
+                <ToolTip :message="`${person.name} - ${person.hub}`">
                   <div
                     class="relative border border-gray-300 w-10 h-10 overflow-hidden bg-gray-100 rounded-full"
                   >
                     <svg
                       class="absolute w-12 h-12 text-gray-400 -left-1"
-                      fill="currentColor"
+                      :fill="person.colour"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
                     >
@@ -200,7 +200,7 @@ async function getinfo(numb) {
                       ></path>
                     </svg>
                     <h2>
-                      {{ person[0].toUpperCase() }}
+                      {{ person.name[0].toUpperCase() }}
                     </h2>
                   </div>
                 </ToolTip>
