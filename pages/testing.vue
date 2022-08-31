@@ -151,7 +151,34 @@ async function getinfo(numb) {
             v-for="event in schedule.events"
           >
             <div class="h-full">
-              <h2 class="mx-4 font-bold text-sm">{{ event.name }}</h2>
+              <div v-if="event.colour === null">
+                <h2 class="mx-4 font-bold text-sm">{{ event.name }}</h2>
+              </div>
+              <div v-if="event.colour === `GREEN`">
+                <h2 class="mx-4 font-bold text-green-500 text-sm">
+                  {{ event.name }}
+                </h2>
+              </div>
+              <div v-if="event.colour === `RED`">
+                <h2 class="mx-4 font-bold text-red-500 text-sm">
+                  {{ event.name }}
+                </h2>
+              </div>
+              <div v-if="event.colour === `BLUE`">
+                <h2 class="mx-4 font-bold text-blue-500 text-sm">
+                  {{ event.name }}
+                </h2>
+              </div>
+              <div v-if="event.colour === `ORANGE`">
+                <h2 class="mx-4 font-bold text-orange-500 text-sm">
+                  {{ event.name }}
+                </h2>
+              </div>
+              <div v-if="event.colour === `VIOLET`">
+                <h2 class="mx-4 font-bold text-violet-500 text-sm">
+                  {{ event.name }}
+                </h2>
+              </div>
               <h2 class="mx-4 text-sm">{{ event.time }}</h2>
             </div>
             <div class="flex mb-5 -space-x-6 grow">
