@@ -23,6 +23,7 @@ export default defineEventHandler(async (event) => {
     events: date.map((event) => {
       return {
         name: event.name,
+        id: event.id,
         colour: event.colour,
         persons: event.users.map((user) => {
           return {

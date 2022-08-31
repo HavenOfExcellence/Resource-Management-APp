@@ -41,6 +41,11 @@ const {
   })
 );
 
+function goToEvent(id) {
+  console.log(id);
+  navigateTo(`event/${id}`);
+}
+
 function stepmonth(step) {
   month.value = month.value + step;
   day.value = 0;
@@ -147,10 +152,10 @@ async function getinfo(numb) {
             There are currently no events on this date
           </div>
           <div
-            class="grid grid-cols-2 items-center"
+            class="grid grid-cols-6 items-center"
             v-for="event in schedule.events"
           >
-            <div class="h-full">
+            <div class="h-full col-span-3">
               <div v-if="event.colour === null">
                 <h2 class="mx-4 font-bold text-sm">{{ event.name }}</h2>
               </div>
@@ -181,7 +186,7 @@ async function getinfo(numb) {
               </div>
               <h2 class="mx-4 text-sm">{{ event.time }}</h2>
             </div>
-            <div class="flex mb-5 -space-x-6 grow">
+            <div class="flex mb-5 -space-x-6 grow col-span-2">
               <div v-for="person in event.persons" :key="person">
                 <ToolTip :message="`${person.name} - ${person.hub}`">
                   <div
@@ -206,6 +211,12 @@ async function getinfo(numb) {
                 </ToolTip>
               </div>
             </div>
+            <button
+              @click="goToEvent(event.id)"
+              class="bg-blue-500 col-span-1 hover:bg-blue-700 mb-5 h-10 text-white font-bold rounded"
+            >
+              EDIT
+            </button>
           </div>
         </div>
         <div v-else>There are currently no events on this date</div>
