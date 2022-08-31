@@ -4,11 +4,13 @@ export default defineEventHandler(async (event) => {
   const { eventid } = useQuery(event);
 
   console.log(eventid);
+
   const eventitem = await prisma.event.findFirst({
     where: {
       id: eventid,
     },
   });
 
-  return eventitem;
+
+  return eventitem ?? "Error";
 });

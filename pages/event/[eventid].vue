@@ -7,10 +7,12 @@ const { data: event } = useFetch("/api/eventbyid", {
   },
 });
 
-console.log(event);
+console.log(event.value);
 </script>
 
 <template>
-  {{ $route.params.eventid }}
-  {{ JSON.stringify(event) }}
+  <ViewWrapper name="Event Information">
+    <div v-if="event === `Error`">asdasd</div>
+    {{ JSON.stringify(event) }}
+  </ViewWrapper>
 </template>
