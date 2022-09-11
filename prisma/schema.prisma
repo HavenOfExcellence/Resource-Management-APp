@@ -19,6 +19,7 @@ model User {
   eventId  String?
   hub      Hub?    @relation(fields: [hubId], references: [id])
   hubId    String?
+  admin    Boolean @default(true)
 }
 
 model Event {

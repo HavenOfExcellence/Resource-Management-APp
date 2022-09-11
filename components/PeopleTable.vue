@@ -6,7 +6,7 @@ const { data: people } = await useLazyFetch("/api/users", {
       const name = person.name;
       const id = person.id;
       const branch = person.hub.name;
-      const role = "Admin";
+      const role = person.admin ? "Admin" : "User";
       return {
         name,
         id,
@@ -91,9 +91,13 @@ const { data: people } = await useLazyFetch("/api/users", {
               </tr>
             </tbody>
           </table>
+          <button
+            class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            New Person
+          </button>
         </div>
       </div>
     </div>
-    {{ names }}
   </div>
 </template>
