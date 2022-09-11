@@ -1,5 +1,5 @@
 <script setup></script>
 
 <template>
-  <TheHeader />
+  <view-wrapper title="Dashboard"> asdasd </view-wrapper>
 </template>

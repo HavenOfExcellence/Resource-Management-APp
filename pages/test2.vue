@@ -1,5 +1,5 @@
 <script setup></script>
 
 <template>
-  <ToolTip> asdasdasd </ToolTip>
+  <view-wrapper title="Test"> <PeopleTable></PeopleTable> </view-wrapper>
 </template>

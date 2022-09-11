@@ -5,6 +5,7 @@ export default defineEventHandler(async (event) => {
     select: {
       name: true,
       id: true,
+      hub: true,
     },
   });
   return user;
