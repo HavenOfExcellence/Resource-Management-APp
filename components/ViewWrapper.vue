@@ -5,6 +5,7 @@ const navigation = reactive([
   { name: "Dashboard", href: "/", current: true },
   { name: "Calendar", href: "/calendar", current: false },
   { name: "People", href: "/people", current: false },
+  { name: "Add People", href: "/addpeople", current: false },
 ]);
 
 const route = useRoute();
