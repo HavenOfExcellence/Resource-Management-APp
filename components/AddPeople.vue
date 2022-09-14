@@ -1,10 +1,8 @@
 <script setup>
-import { Form, Field } from "vee-validate";
+import { Form, Field, ErrorMessage } from "vee-validate";
 const hubs = await useLazyFetch("/api/hub").data;
 
 async function submitvalues(values) {
-  alert(JSON.stringify(values));
-
   const { name, hub } = values;
 
   const data = await useLazyFetch("/api/addperson", {
@@ -14,10 +12,17 @@ async function submitvalues(values) {
     },
   });
 }
+
+function validateName(values) {
+  return values === undefined ? "Name is Required" : true;
+}
+
+function validateHub(values) {
+  return values === undefined ? "Hub is Required" : true;
+}
 </script>
 
 <template>
-  {{ hubs }}
   <div class="mt-10 sm:mt-0">
     <div class="md:grid md:grid-cols-3 md:gap-6">
       <div class="mt-5 md:col-span-2 md:mt-0">
@@ -32,10 +37,17 @@ async function submitvalues(values) {
                     >Name</label
                   >
                   <Field
+                    :rules="validateName"
                     type="text"
                     name="name"
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
+
+                  <ErrorMessage
+                    class="block mt-xs text-red-700 font-medium"
+                    name="name"
+                  >
+                  </ErrorMessage>
                 </div>
 
                 <div class="col-span-6">
@@ -45,6 +57,7 @@ async function submitvalues(values) {
                     >Hub</label
                   >
                   <Field
+                    :rules="validateHub"
                     as="select"
                     id="country"
                     name="hub"
@@ -55,6 +68,12 @@ async function submitvalues(values) {
                       {{ option.name }}
                     </option>
                   </Field>
+
+                  <ErrorMessage
+                    class="block mt-xs text-red-700 font-medium"
+                    name="hub"
+                  >
+                  </ErrorMessage>
                 </div>
               </div>
             </div>
