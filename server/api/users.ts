@@ -6,8 +6,9 @@ export default defineEventHandler(async (event) => {
       name: true,
       id: true,
       hub: true,
-      admin:true
+      admin: true,
     },
   });
+
   return user;
 });

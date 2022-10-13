@@ -1,12 +1,13 @@
 <script setup>
-const { data: people } = await useLazyFetch("/api/users", {
+const { data: people } = await useFetch("/api/users", {
   transform: (names) => {
     console.log(names);
-    return names.map((person) => {
-      const name = person.name;
-      const id = person.id;
-      const branch = person.hub.name;
-      const role = person.admin ? "Admin" : "User";
+    console.log("asdasd");
+    const data = names.map((person) => {
+      const name = person.name ?? "MISSING";
+      const id = person.id ?? "MISSING";
+      const branch = person.hub.name ?? "MISSING";
+      const role = person.admin ? "Admin" : "User" ?? "MISSING";
       return {
         name,
         id,
@@ -14,6 +15,8 @@ const { data: people } = await useLazyFetch("/api/users", {
         role,
       };
     });
+    // console.log(data);
+    return data;
   },
 });
 </script>
